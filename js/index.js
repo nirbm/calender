@@ -9,6 +9,8 @@ var calendar = $('#calendar').fullCalendar({
 				center: 'title',
               right: ''
 			},
+			minTime: "06:00:00",
+			maxTime: "20:00:00",
 			hiddenDays: [6],
           firstHour: 8,
           allDaySlot: false,
@@ -26,8 +28,8 @@ var calendar = $('#calendar').fullCalendar({
 					calendar.fullCalendar('renderEvent',
 						{
 							title: title,
-							start: start,
-							end: end,
+							start: "04:00",
+							end: "20:00",
 							allDay: allDay
 						},
 						true // make the event "stick"
