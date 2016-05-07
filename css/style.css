@@ -1,5 +1,6 @@
 body {
-  font-family: "Arial"
+  font-family: "Arial";
+  background-image: url('../bg.jpg');
 }
 
 .container-fluid{
@@ -7,6 +8,7 @@ body {
   display:table;
   width: 100%;
   padding: 0;
+  opacity:0.9;
 }
  
 .row-fluid {height: 100%; display:table-cell; vertical-align: middle;}
