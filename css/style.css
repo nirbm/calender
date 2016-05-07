@@ -1,3 +1,6 @@
 body {
   font-family: "Arial"
 }
+.fc-agenda-slots td div {
+  height: 60px !important;
+}
