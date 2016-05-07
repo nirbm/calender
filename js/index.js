@@ -15,7 +15,7 @@ var calendar = $('#calendar').fullCalendar({
           height: 400,
           axisFormat: "HH:mm",
           defaultView: "agendaWeek",
-          weekends: false,
+          weekends: true,
 			selectable: true,
 			selectHelper: true,
           weekNumbers: true,
