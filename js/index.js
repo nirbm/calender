@@ -25,7 +25,7 @@ var calendar = $('#calendar').fullCalendar({
 			selectHelper: true,
           weekNumbers: true,
 			select: function(start, end, allDay) {
-
+				addEventCliked();
 				//var title = prompt('Event Title:');
 				if (title) {
 					calendar.fullCalendar('renderEvent',
@@ -93,3 +93,11 @@ var calendar = $('#calendar').fullCalendar({
             }
          ]
 		});
+
+function addEventCliked()
+{
+	var eventName = $('#event_input').val();
+	var startDate = $('#endhour').val();
+	alert(document.getElementById("event_input").value );
+
+}
