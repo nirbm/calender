@@ -9,17 +9,16 @@ var calendar = $('#calendar').fullCalendar({
 				center: 'title',
               right: ''
 			},
-			minTime: "06:00:00",
-			maxTime: "20:00:00",
-			hiddenDays: [6],
+		hiddenDays: [6],//adnim need to enter the hidde days
           firstHour: 8,
-          allDaySlot: false,
-          slotMinutes: 60,
-          height: 400,
-          axisFormat: "HH:mm",
+          allDaySlot: false,// if admin want to set the all day time
+          slotMinutes: 60, // time per hour
+          height: 400, //height of the calendar
+			axisFormat: "HH:mm",//admin format
           defaultView: "agendaWeek",
           weekends: true,
 			selectable: true,
+
 			selectHelper: true,
           weekNumbers: true,
 			select: function(start, end, allDay) {
@@ -28,8 +27,8 @@ var calendar = $('#calendar').fullCalendar({
 					calendar.fullCalendar('renderEvent',
 						{
 							title: title,
-							start: "04:00",
-							end: "20:00",
+							start: start,
+							end: end,
 							allDay: allDay
 						},
 						true // make the event "stick"
@@ -88,5 +87,7 @@ var calendar = $('#calendar').fullCalendar({
                 color: '#6699FF',    
                 textColor: 'black'
             }
+
+
          ]
 		});
