@@ -9,6 +9,7 @@ var calendar = $('#calendar').fullCalendar({
 				center: 'title',
               right: ''
 			},
+			hiddenDays: [6],
           firstHour: 8,
           allDaySlot: false,
           slotMinutes: 60,
