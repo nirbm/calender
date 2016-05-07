@@ -10,7 +10,7 @@ var calendar = $('#calendar').fullCalendar({
               right: ''
 			},
 			minTime: "06:00:00",
-			maxTime: "20:00:00",
+			maxTime: "22:00:00",
 			hiddenDays: [6],
           firstHour: 8,
           allDaySlot: false,
