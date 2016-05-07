@@ -4,6 +4,8 @@ var m = date.getMonth();
 var y = date.getFullYear();
 
 var calendar = $('#calendar').fullCalendar({
+
+
 			header: {
 				left: 'prev,next today',
 				center: 'title',
@@ -23,6 +25,7 @@ var calendar = $('#calendar').fullCalendar({
 			selectHelper: true,
           weekNumbers: true,
 			select: function(start, end, allDay) {
+
 				//var title = prompt('Event Title:');
 				if (title) {
 					calendar.fullCalendar('renderEvent',

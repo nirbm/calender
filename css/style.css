@@ -26,7 +26,7 @@ body {
 /* Remove that awful yellow color and border from today in Schedule */
 .fc-today {
   opacity: 0;
-  border: none;
+  border: 1px;
 }
 
 /* Styling for each event from Schedule */
@@ -77,4 +77,8 @@ body {
   opacity: .65 !important;
   margin-left: 12px !important;
   padding: 5px! important;
+}
+
+#popup_choose {
+  direction: ltr;
 }
