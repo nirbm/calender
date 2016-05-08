@@ -1,103 +1,101 @@
-var date = new Date();
-var d = date.getDate();
-var m = date.getMonth();
-var y = date.getFullYear();
+$(document).ready(function () {
+	var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+	var dateClick;
+	$('#btnChooseColor').click(endDialig);
 
-var calendar = $('#calendar').fullCalendar({
-
-
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-              right: ''
-			},
-			minTime: "06:00:00",
-			maxTime: "22:00:00",
-			hiddenDays: [6],
-          firstHour: 8,
-          allDaySlot: false,
-          slotMinutes: 60,
-          height: 400,
-          axisFormat: "HH:mm",
-          defaultView: "agendaWeek",
-          weekends: true,
-			selectable: true,
-			selectHelper: true,
-          weekNumbers: true,
-			select: function(start, end, allDay) {
-				addEventCliked();
-				//var title = prompt('Event Title:');
-				if (title) {
-					calendar.fullCalendar('renderEvent',
+	var calendar = $('#calendar').fullCalendar({
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: ''
+		},
+		minTime: "06:00:00",
+		maxTime: "22:00:00",
+		hiddenDays: [6],
+		firstHour: 8,
+		allDaySlot: false,
+		slotMinutes: 60,
+		height: 400,
+		axisFormat: "HH:mm",
+		defaultView: "agendaWeek",
+		weekends: true,
+		selectable: true,
+		selectHelper: true,
+		weekNumbers: true,
+		dayClick: function(date, allDay, jsEvent, view)
+		{
+			$("#dialog").dialog("open");
+			dateClick = date;
+		},
+		select: function(start, end, allDay) {
+			//var title = prompt('Event Title:');
+			if (title) {
+				calendar.fullCalendar('renderEvent',
 						{
 							title: title,
-							start: "04:00",
-							end: "20:00",
+							start: start,
+							end: end,
 							allDay: allDay
 						},
 						true // make the event "stick"
-					);
-				}
-				calendar.fullCalendar('unselect');
+				);
+			}
+			calendar.fullCalendar('unselect');
+		},
+		editable: true,
+		eventSources: [
+			// your event source
+			{
+				events: [ // put the array in the `events` property
+
+				],
+				color: '#3300FF',
+				textColor: 'white'
 			},
-			editable: true,
-          eventSources: [
-            // your event source
-            {
-                events: [ // put the array in the `events` property
-                     {
-					      title: 'Dansk',
-					      start: new Date(y, m, d, 10, 0),
-					      end: new Date(y, m, 10, 45),
-                       allDay: false
-				      },
-                  {
-					      title: 'Tysk',
-					      start: new Date(y, m, d, 10, 30),
-					      end: new Date(y, m, d, 11, 15),
-                    allDay: false
-				     },
-                  {
-					      title: 'Matematik',
-					      start: new Date(y, m, d, 12),
-					      end: new Date(y, m, d, 12, 45),
-                    allDay: false
-				     }
-                ],
-                color: '#3300FF',    
-                textColor: 'white'
-            },
-            {
-                events: [ 
-                     {
-					      title: 'Spansk',
-					      start: new Date(y, m, d, 8, 0),
-					      end: new Date(y, m, d, 8, 45),
-                       allDay: false
-				      },
-                  {
-					      title: 'Biologi',
-					      start: new Date(y, m, d, 9),
-					      end: new Date(y, m, d, 9, 45),
-                    allDay: false
-				     },
-                  {
-					      title: 'Idræt',
-					      start: new Date(y, m, d, 13),
-					      end: new Date(y, m, d, 13, 45),
-                    allDay: false
-				     }
-                ],
-                color: '#6699FF',    
-                textColor: 'black'
-            }
-         ]
-		});
+			{
+				events: [
 
-function addEventCliked()
-{
-	var eventName = $('#event_input').val();
-	var startDate = $('#endhour').val();
-	alert(document.getElementById("event_input").value );
+				],
+				color: '#6699FF',
+				textColor: 'black'
+			}
+		]
+	});
 
-}
+	var dialogst = $("#dialog").dialog({
+		autoOpen: false,
+		height: 300,
+		width: 350,
+		modal: true
+	});
+
+	function endDialig(){
+
+		var text = $("#endhour").val();
+		var houre = parseInt(text);
+		var day = dateClick.getDate();
+		var month = dateClick.getMonth();
+		var year = dateClick.getFullYear();
+		text = $("#event_input").val();
+		var endDate = new Date(year, month, day, houre, 0);
+
+		if(dateClick.getHours() >= endDate.getHours())
+		{	alert("uston we have a problem"); return;}
+
+		calendar.fullCalendar('renderEvent',
+				{
+					title: text,
+					start: dateClick,
+					end: endDate,
+					allDay: false
+				},
+				true // make the event "stick"
+		);
+
+		$("#dialog").dialog("close");
+	}
+
+});
