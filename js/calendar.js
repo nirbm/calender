@@ -1,130 +1,101 @@
+$(document).ready(function () {
+	var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+	var dateClick;
+	$('#btnChooseColor').click(endDialig);
 
-$(document).ready(function() {
-	if(localStorage.getItem("Events") == undefined)
-    {
-		var events = [];
-        localStorage.setItem("Events", JSON.stringify(events));
-	}
-	//show the calendar
-    $('#calendar').fullCalendar({
-		
-
-		
-		
+	var calendar = $('#calendar').fullCalendar({
 		header: {
-            left: 'next,prev today',
-            center: 'title',
-            right: 'month,basicWeek,basicDay'
-        },
-		eventClick: function(calEvent, jsEvent, view)
-		{
-			var contentBox = "<div id='myModal' class='modal'><div class='modal-content'><span class='close'>×</span><p>" + 
-			calEvent.title +"<br/>"+ calEvent.start.startOf('day').fromNow()+ "</p></div></div>";
-			$('#details').prepend(contentBox);
-			// Get the modal
-			var modal = document.getElementById('myModal');
-
-			// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("close")[0];
-
-			// When the user clicks the button, open the modal 
-
-				modal.style.display = "block";
-
-
-			// When the user clicks on <span> (x), close the modal
-			span.onclick = function() {
-				modal.style.display = "none";
-			}
-			
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-				if (event.target == modal) {
-					modal.style.display = "none";
-				}
-			}
+			left: 'prev,next today',
+			center: 'title',
+			right: ''
 		},
-		lang: 'he',
-		height:700px;
-		isRTL: true,
-        editable: false,
-		eventLimit: true,
-        fixedWeekCount: false,
-		displayEventTime: false,
-        //timezone: false,
-        events:	getEventsFromStorage()
-    });
-    $("body").keydown(function(e) {
-        if (e.keyCode == 37)
-        {
-            $('#calendar').fullCalendar('prev');
-        }
-        else if (e.keyCode == 39)
-        {
-            $('#calendar').fullCalendar('next');
-        }
-    });
-	
+		minTime: "06:00:00",
+		maxTime: "22:00:00",
+		hiddenDays: [6],
+		firstHour: 8,
+		allDaySlot: false,
+		slotMinutes: 60,
+		height: 550,
+		axisFormat: "HH:mm",
+		defaultView: "agendaWeek",
+		weekends: true,
+		selectable: true,
+		selectHelper: true,
+		weekNumbers: true,
+		dayClick: function(date, allDay, jsEvent, view)
+		{
+			$("#dialog").dialog("open");
+			dateClick = date;
+		},
+		select: function(start, end, allDay) {
+			//var title = prompt('Event Title:');
+			if (title) {
+				calendar.fullCalendar('renderEvent',
+						{
+							title: title,
+							start: start,
+							end: end,
+							allDay: allDay
+						},
+						true // make the event "stick"
+				);
+			}
+			calendar.fullCalendar('unselect');
+		},
+		editable: true,
+		eventSources: [
+			// your event source
+			{
+				events: [ // put the array in the `events` property
+
+				],
+				color: '#3300FF',
+				textColor: 'white'
+			},
+			{
+				events: [
+
+				],
+				color: '#6699FF',
+				textColor: 'black'
+			}
+		]
+	});
+
+	var dialogst = $("#dialog").dialog({
+		autoOpen: false,
+		height: 300,
+		width: 350,
+		modal: true
+	});
+
+	function endDialig(){
+
+		var text = $("#endhour").val();
+		var houre = parseInt(text);
+		var day = dateClick.getDate();
+		var month = dateClick.getMonth();
+		var year = dateClick.getFullYear();
+		text = $("#event_input").val();
+		var endDate = new Date(year, month, day, houre, 0);
+
+		if(dateClick.getHours() >= endDate.getHours())
+		{	alert("uston we have a problem"); return;}
+
+		calendar.fullCalendar('renderEvent',
+				{
+					title: text,
+					start: dateClick,
+					end: endDate,
+					allDay: false
+				},
+				true // make the event "stick"
+		);
+
+		$("#dialog").dialog("close");
+	}
+
 });
-
-
-//this function insert the tasks and the events (from the local storage) to array show them in the calendar
-function getEventsFromStorage()
-{
-	var arr = [];
-	if(localStorage.getItem("list") == undefined || localStorage.getItem("Events") == undefined)
-        return arr;
-                
-    var list = JSON.parse(localStorage.getItem("list"));
-    $.each(list, function(i, item) {
-		var titleOfItem = item.CourseName + ', תרגיל מספר ' + item.MissionId;
-		var task = {title : titleOfItem, start: item.FinalDate};
-		arr.push(task);
-	});
-	
-	var events = JSON.parse(localStorage.getItem("Events"));
-	$.each(events, function(i, item) {
-		var event = {title : item.title, start: item.start, end: item.end, color: item.color};
-		arr.push(event);
-	});
-	return arr;
-}
-
-/*
-    this function add the event to the local storage, create new event object and add the new event to the calendar.
-*/
-function addEventCliked()
-{	
-	var eventName = $('#eventName').val();
-	var startDate = $('#startDate').val();
-	var endDate = $('#endDate').val();
-	if(eventName == '' || startDate == '' || endDate == '')
-	{
-		alert("You have to insert all the data");
-		return;
-	}
-	var dEnd = new Date($('#endDate').val());
-    dEnd.setDate(dEnd.getDate()+1);
-	var dStart = new Date($('#startDate').val());
-    	
-	var newEvent = {title: $('#eventName').val(), start: dStart, end: dEnd , color: $(".jscolor").css("background-color")};
-    var eventsArr = [];
-    eventsArr.push(newEvent);
-    
-	$('#calendar').fullCalendar( 'addEventSource', eventsArr );
-	var events = JSON.parse(localStorage.getItem("Events"));
-	events.push(newEvent);
-	localStorage.setItem("Events", JSON.stringify(events));
-}
-
-//this function clear all the events from the local storage and refresh the page
-function ClearLocalStorage()
-{
-	if (confirm("האם למחוק את כל האירועים?") == true)
-	{
-		localStorage.removeItem('Events');
-		window.location.reload();
-	}
-	
-}
-
