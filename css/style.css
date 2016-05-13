@@ -15,8 +15,8 @@ html, body {
 	height: 100%; /* cross-browser */
     background-image: url("pat.png"); reapet;
 	-moz-box-shadow: 0px 10px 5px #484445;
--webkit-box-shadow: 0px 10px 5px #484445;
-box-shadow: 0px 10px 4px #484445;
+	-webkit-box-shadow: 0px 10px 5px #484445;
+	box-shadow: 0px 10px 4px #484445;
 }
 
 
@@ -109,6 +109,19 @@ box-shadow: 0px 10px 4px #484445;
 
 #popup_choose {
   direction: ltr;
+}
+
+.fc-widget-header{
+    background-color: #ef414c;
+	color: #a7cc76;
+}
+
+.fc-header-title {
+    background-color:#a7cc76;
+}
+
+.fc-header-title h2 {
+    color:#ef414c;
 }
 
 
