@@ -7,6 +7,10 @@ $(document).ready(function() {
 	}
 	//show the calendar
     $('#calendar').fullCalendar({
+		
+
+		
+		
 		header: {
             left: 'next,prev today',
             center: 'title',
@@ -41,6 +45,7 @@ $(document).ready(function() {
 			}
 		},
 		lang: 'he',
+		height:700px;
 		isRTL: true,
         editable: false,
 		eventLimit: true,

@@ -18,7 +18,7 @@ $(document).ready(function () {
 		firstHour: 8,
 		allDaySlot: false,
 		slotMinutes: 60,
-		height: 400,
+		height: 550,
 		axisFormat: "HH:mm",
 		defaultView: "agendaWeek",
 		weekends: true,
