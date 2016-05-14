@@ -8,17 +8,19 @@ $(document).ready(function () {
 
 	var calendar = $('#calendar').fullCalendar({
 		header: {
-			left: 'prev,next today',
+			left: 'next,prev today',
 			center: 'title',
 			right: 'month, agendaWeek, year'
 		},
+		lang: 'he', 
+		isRTL: true , 
 		minTime: "06:00:00",
 		maxTime: "22:00:00",
 		hiddenDays: [6],
 		firstHour: 8,
 		allDaySlot: false,
 		slotMinutes: 60,
-		height: 550,
+		height: 500,
 		axisFormat: "HH:mm",
 		defaultView: "agendaWeek",
 		weekends: true,
